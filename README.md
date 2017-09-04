@@ -1,4 +1,3 @@
-# Algorithms
-Assignments &amp; Practices of Stanford algorithm courses
+### Algorithms
 
-1. Javascript implementation Karatsuba algorithm
+1. Javascript implementation of Karatsuba Multiplication Algorithm
