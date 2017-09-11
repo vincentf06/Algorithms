@@ -1,3 +1,4 @@
 ### Algorithms
 
-1. Javascript implementation of Karatsuba Multiplication Algorithm
+1. Karatsuba Multiplication Algorithm
+2. Counting Inversions (Divide and Conquer)
