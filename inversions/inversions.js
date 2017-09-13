@@ -57,9 +57,7 @@ class Inversion {
 				j++;
 			}
 		}
-
-		let restL = l.slice(i);
-		let restR = r.slice(j);
-		return sortedArr.concat(restL).concat(restR);
+		
+		return [...sortedArr, ...l.slice(i), ...r.slice(j)];
 	}
 }
