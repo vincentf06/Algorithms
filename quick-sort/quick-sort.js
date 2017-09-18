@@ -15,7 +15,9 @@ rl.on('line', (line) => {
 });
 
 rl.on('close', () => {
-	console.log(arr)
+	let sorter = new QuickSort();
+	sorter.sort(arr, 0, 9999);
+	console.log(sorter.comparisons);
 });
 
 class QuickSort {
@@ -23,19 +25,32 @@ class QuickSort {
 		this.comparisons = 0;
 	}
 
-	quickSort(arr, lInd, rInd) {
-		let len = arr.length;
-		if(len === 1 ) return;
+	sort(arr, lInd, rInd) {
+		let len = rInd - lInd + 1;
+		if(len < 2 ) return;
 
-		let parInd = this._partition(arr, lInd, rInd);
+		let pivotInd = lInd;
+		let parInd = this._partition(arr, lInd, rInd, pivotInd);
 		
-		quickSort(arr, lInd, parInd - 1);
-		quickSort(arr, parInd + 1, rInd);
+		this.sort(arr, lInd, parInd - 1);
+		this.sort(arr, parInd + 1, rInd);
 	}
 
-	_partition(arr, lInd, rInd) {
-		let pivotInd = lInd;
+	_partition(arr, lInd, rInd, pivotInd) {
 		let i = pivotInd + 1;
 		let j = pivotInd + 1;
+
+		while(j <= rInd) {
+			if(Number(arr[j]) < Number(arr[pivotInd])) {
+				[arr[i], arr[j]] = [arr[j], arr[i]];
+				i++;
+			}
+
+			j++;
+		}
+
+		[arr[pivotInd], arr[i - 1]] = [arr[i - 1], arr[pivotInd]];
+		this.comparisons += rInd - lInd;
+		return i - 1;
 	}
 }
