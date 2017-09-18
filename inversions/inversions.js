@@ -36,10 +36,10 @@ class Inversion {
 		let sortedL = this.countInv(l);
 		let sortedR = this.countInv(r);
 
-		return this.merge(sortedL, sortedR);
+		return this._merge(sortedL, sortedR);
 	}
 
-	merge(l, r) {
+	_merge(l, r) {
 		let sortedArr = [];
 		let lLen = l.length;
 		let rLen = r.length;
