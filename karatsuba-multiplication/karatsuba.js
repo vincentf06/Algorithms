@@ -40,6 +40,7 @@ function multiply(x, y) {
 
 	let ac = multiply(a, c);
 	let bd = multiply(b, d);
+	// Gauss's trick
 	let temp = multiply(bigInt(a).add(b).toString(), bigInt(c).add(d).toString());
 	let adbc = bigInt(temp).minus(ac).minus(bd).toString();
 
