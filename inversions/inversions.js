@@ -52,7 +52,7 @@ class Inversion {
 				i++;
 			} else {
 				sortedArr.push(r[j]);
-				// Black magic is here
+				// Counting
 				this.count += l.slice(i).length;
 				j++;
 			}
