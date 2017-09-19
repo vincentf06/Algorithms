@@ -1,5 +1,5 @@
 ## Algorithms (Node.js)
 
-1. Karatsuba Multiplication Algorithm
-2. Counting Inversions (Divide and Conquer)
-3. Counting Comparisons of Quick Sort
+1. Karatsuba multiplication algorithm
+2. Counting inversions (divide and conquer)
+3. Comparisons of quick sort(median-of-three pivot rule)
