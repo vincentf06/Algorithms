@@ -1,4 +1,4 @@
-## Algorithms (Node.js)
+## Algorithms
 
 1. Karatsuba multiplication algorithm
 2. Counting inversions (divide and conquer)
