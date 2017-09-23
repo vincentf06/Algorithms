@@ -4,4 +4,5 @@
 2. Counting inversions (divide and conquer)
 3. Closest pair of points
 4. Comparisons of quick sort (median-of-three pivot rule)
-5. Randomized contraction algorithm
+5. R select algorithm
+6. Randomized contraction algorithm
