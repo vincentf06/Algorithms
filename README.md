@@ -5,4 +5,4 @@
 3. Closest pair of points
 4. Comparisons of quick sort (median-of-three pivot rule)
 5. R select algorithm
-6. Randomized contraction algorithm
+6. Karger's min cut algorithm
