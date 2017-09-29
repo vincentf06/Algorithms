@@ -6,11 +6,10 @@
 const fs = require('fs');
 const readline = require('readline');
 
-
 const adjacencyList = [];
 const edges = [];
 const rl = readline.createInterface({
-	input: fs.createReadStream('test.txt'),
+	input: fs.createReadStream('graph.txt'),
 });
 
 rl.on('line', (line) => {
@@ -29,16 +28,17 @@ rl.on('line', (line) => {
 });
 
 rl.on('close', () => {
-	const minCut = getMinCut(adjacencyList, edges);
+	getMinCut(adjacencyList, edges);
 });
 
-function getMinCut(adjacencyList, edges) {
-	if(adjacencyList.length === 2) return;
+function getMinCut(adjacencyList, edges, callback) {
+	if(adjacencyList.length === 2) {
+		return console.log(adjacencyList[0].length - 1);
+	}
 
-	const thisEdge = getRandomEdge(edges);
-	// console.log(thisEdge);
-	removeSelectedEdge(edges, thisEdge);
-	contract(adjacencyList, edges, thisEdge);
+	const chosenEdge = getRandomEdge(edges);
+	removeSelectedEdge(edges, chosenEdge);
+	contract(adjacencyList, edges, chosenEdge);
 	getMinCut(adjacencyList, edges);
 }
 
@@ -48,24 +48,34 @@ function getRandomEdge(edges) {
 }
 
 // Remove an edge from edge list when it's chosen
-function removeSelectedEdge(edges, thisEdge) {
-	console.log(thisEdge)
-	let index = edges.indexOf(thisEdge);
-	edges.splice(index, 1);
-	// console.log(edges)
-	for(let [thisIndex, edge] of edges.entries()) {
-		if((edge[0] === thisEdge[0] && edge[1] === thisEdge[1]) || (edge[0] === thisEdge[1] && edge[1] === thisEdge[0])) {
-			index = thisIndex;
-			break;
+function removeSelectedEdge(edges, chosenEdge) {
+	for(let i = edges.length - 1; i >= 0; i--) {
+		if((edges[i][0] === chosenEdge[0] && edges[i][1] === chosenEdge[1]) || (edges[i][0] === chosenEdge[0] && edges[i][1] === chosenEdge[1])) {
+			edges.splice(i, 1);
 		}
 	}
-	console.log(edges[index])
-	edges.splice(index, 1);
+
+	// update edge list
+	for(let edge of edges) {
+		if(edge[0] === chosenEdge[0]) {
+			edge[0] = chosenEdge[1];
+		} else if(edge[1] === chosenEdge[0]) {
+			edge[1] = chosenEdge[1];
+		}
+	}
+
+	// Remove self-loops in edge list
+	// TODO: Can be merged in above steps
+	for(let i = edges.length - 1; i >= 0; i--) {
+		if(edges[i][0] === edges[i][1]) {
+			edges.splice(i, 1);
+		}
+	}
 }
 
-function contract(adjacencyList, edges, thisEdge) {
-	let u = thisEdge[0];
-	let v = thisEdge[1];
+function contract(adjacencyList, edges, chosenEdge) {
+	let u = chosenEdge[0];
+	let v = chosenEdge[1];
 	let vertex_1 = null;
 	let vertex_2 = null;
 	let vertexIndex_1 = null;
@@ -104,15 +114,4 @@ function contract(adjacencyList, edges, thisEdge) {
 
 	// Remove the first vertex after merging
 	adjacencyList.splice(vertexIndex_1, 1);
-
-	// update edge list
-	for(let edge of edges) {
-		if(edge[0] === u) {
-			edge[0] = v;
-		} else if(edge[1] === u) {
-			edge[1] = v;
-		}
-	}
-
-	// console.log(edges)
 }
