@@ -1,5 +1,6 @@
 /* Karger's min cut algorithm */
 /* Store edges separately to make sure edge pick is uniformly at random */
+/* TODO: Merge some loops to decrease the constant of time complexity */
 
 'use strict';
 
