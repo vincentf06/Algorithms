@@ -29,18 +29,20 @@ rl.on('line', (line) => {
 });
 
 rl.on('close', () => {
-	getMinCut(adjacencyList, edges);
+	const minCut = getMinCut(adjacencyList, edges);
+	console.log(minCut);
 });
 
-function getMinCut(adjacencyList, edges, callback) {
+function getMinCut(adjacencyList, edges) {
 	if(adjacencyList.length === 2) {
-		return console.log(adjacencyList[0].length - 1);
+		return adjacencyList[0].length - 1;
 	}
 
 	const chosenEdge = getRandomEdge(edges);
 	removeSelectedEdge(edges, chosenEdge);
 	contract(adjacencyList, edges, chosenEdge);
-	getMinCut(adjacencyList, edges);
+	const minCut = getMinCut(adjacencyList, edges);
+	return minCut;
 }
 
 function getRandomEdge(edges) {
