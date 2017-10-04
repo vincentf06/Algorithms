@@ -6,3 +6,4 @@
 4. Comparisons of quick sort (median-of-three pivot rule)
 5. R select algorithm
 6. Karger's min cut algorithm
+7. Computing strongly connected components of a directed graph
