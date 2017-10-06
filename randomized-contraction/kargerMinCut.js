@@ -77,8 +77,7 @@ function removeSelectedEdge(edges, chosenEdge) {
 }
 
 function contract(adjacencyList, edges, chosenEdge) {
-	let u = chosenEdge[0];
-	let v = chosenEdge[1];
+	let [u, v] = chosenEdge;
 	let vertex_1 = null;
 	let vertex_2 = null;
 	let vertexIndex_1 = null;

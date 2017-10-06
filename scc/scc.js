@@ -9,17 +9,30 @@
 
 const { createReadStream } = require('fs');
 const { createInterface } = require('readline');
+const clone = require('clone');
 
 const graph = [];
+const thisList = {
+	tail: null,
+	heads: [],
+};
+
 const rl = createInterface({
-	input: createReadStream('directed-graph.txt')
+	input: createReadStream('graph.txt')
 });
 
 rl.on('line', (line) => {
 	const list = line.split(' ');
-	// Remove the last entry which is a space
-	list.pop();
-	graph.push(list);
+	const [tail, head] = list;
+
+	if(tail !== thisList.tail) {
+		if(thisList.tail) graph.push(clone(thisList));
+
+		thisList.tail = tail;
+		thisList.heads = [head];
+	} else {
+		thisList.heads.push(head);
+	}
 });
 
 rl.on('close', () => {
