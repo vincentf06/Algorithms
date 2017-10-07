@@ -7,7 +7,7 @@
 const fs = require('fs');
 const readline = require('readline');
 
-const adjacencyList = [];
+const adjacencyLists = [];
 const edges = [];
 const rl = readline.createInterface({
 	input: fs.createReadStream('graph.txt'),
@@ -17,7 +17,7 @@ rl.on('line', (line) => {
 	const list = line.split('\t');
 	// The last entry is a tab, remove it.
 	list.pop();
-	adjacencyList.push(list);
+	adjacencyLists.push(list);
 
 	const u = list[0];
 	for(let [index, v] of list.entries()) {
@@ -29,19 +29,19 @@ rl.on('line', (line) => {
 });
 
 rl.on('close', () => {
-	const minCut = getMinCut(adjacencyList, edges);
+	const minCut = getMinCut(adjacencyLists, edges);
 	console.log(minCut);
 });
 
-function getMinCut(adjacencyList, edges) {
-	if(adjacencyList.length === 2) {
-		return adjacencyList[0].length - 1;
+function getMinCut(adjacencyLists, edges) {
+	if(adjacencyLists.length === 2) {
+		return adjacencyLists[0].length - 1;
 	}
 
 	const chosenEdge = getRandomEdge(edges);
 	removeSelectedEdge(edges, chosenEdge);
-	contract(adjacencyList, edges, chosenEdge);
-	const minCut = getMinCut(adjacencyList, edges);
+	contract(adjacencyLists, edges, chosenEdge);
+	const minCut = getMinCut(adjacencyLists, edges);
 	return minCut;
 }
 
@@ -76,13 +76,13 @@ function removeSelectedEdge(edges, chosenEdge) {
 	}
 }
 
-function contract(adjacencyList, edges, chosenEdge) {
+function contract(adjacencyLists, edges, chosenEdge) {
 	let [u, v] = chosenEdge;
 	let vertex_1 = null;
 	let vertex_2 = null;
 	let vertexIndex_1 = null;
 	
-	for(let [index ,list] of adjacencyList.entries()) {
+	for(let [index ,list] of adjacencyLists.entries()) {
 		if(list[0] === u) {
 			vertex_1 = list;
 			vertexIndex_1 = index;
@@ -98,7 +98,7 @@ function contract(adjacencyList, edges, chosenEdge) {
 		if(e !== v) {
 			vertex_2.push(e);
 			
-			for(let list of adjacencyList) {
+			for(let list of adjacencyLists) {
 				if(list[0] === e) {
 					for(let [index, e] of list.entries()) {
 						if(index === 0) continue;
@@ -115,5 +115,5 @@ function contract(adjacencyList, edges, chosenEdge) {
 	}
 
 	// Remove the first vertex after merging
-	adjacencyList.splice(vertexIndex_1, 1);
+	adjacencyLists.splice(vertexIndex_1, 1);
 }
