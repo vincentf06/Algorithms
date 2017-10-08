@@ -5,6 +5,7 @@
 /* Kosaraju’s Two-Pass algorithm is used to find SCCs */
 /* Recursive DFS will cause stack overflow because of the size of the graph */
 /* Stack is used to implement DFS */
+/* TODO: do the first pass on original graph instead of constructing the reverse graph */
 
 'use strict';
 
@@ -13,31 +14,67 @@ const { createInterface } = require('readline');
 const clone = require('clone');
 
 const graph = [];
-const reversedGraph = [];
+const reverseGraph = [];
 
 const rl = createInterface({
-	input: createReadStream('graph.txt')
+	input: createReadStream('test.txt')
 });
 
 rl.on('line', (line) => {
 	const list = line.split(' ');
 	const [tail, head] = list;
 
-	// Build graph
+	// Construct original graph
 	if(!graph[tail]) {
-		graph[tail] = {heads: [head]};
+		graph[tail] = {heads: [head], visited: false};
 	} else {
 		graph[tail].heads.push(head);
 	}
 
-	// Build reversed graph
-	if(!reversedGraph[head]) {
-		reversedGraph[head] = {heads: [tail]};
+	// Construct reverse graph
+	if(!reverseGraph[head]) {
+		reverseGraph[head] = {heads: [tail], visited: false};
 	} else {
-		reversedGraph[head].heads.push(tail);
+		reverseGraph[head].heads.push(tail);
 	}
 });
 
 rl.on('close', () => {
-	console.log(graph)
+	const sccCaculator = new SccCaculator(graph, reverseGraph);
+	sccCaculator.traverse(false);
 });
+
+class SccCaculator {
+	constructor(graph, reverseGraph) {
+		this.graph = graph;
+		this.reverseGraph = reverseGraph;
+		this.finishingTime = 0;
+		this.leaders = [];
+		this.stack = [];
+	}
+
+	traverse(forward) {
+		const graph = forward ? this.graph : this.reverseGraph;
+		
+		for(let i = 0; i < graph.length; i++) {
+			if(graph[i] && !graph[i].visited) {
+				this.leaders.push(i);
+				this._dfs(i, graph);
+			}
+		}
+		console.log(graph, this.stack)
+	}
+
+	_dfs(index, graph) {
+		console.log(graph, index)
+		const heads = graph[index].heads;
+		this.stack.push(index);
+
+		for(let j = 0; j < heads.length; j++) {
+			if(!graph[heads[j]].visited && heads[j] !== index) {
+				this.stack.push(j);
+				this._dfs(j, graph);
+			}
+		}
+	}
+}
