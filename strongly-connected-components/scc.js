@@ -1,11 +1,15 @@
-/* Computing strongly connected components of a directed graph */
-/* There are more than 800,000 vertices and 5,000,000 edges in the graph */
-/* Memery management need to be very careful */
-/* Adajcency list is used to represent the graph */
-/* Kosaraju’s Two-Pass algorithm is used to find SCCs */
-/* Recursive DFS will cause stack overflow because of the size of the graph */
-/* Stack is used to implement DFS */
-/* TODO: do the first pass on original graph instead of constructing the reverse graph */
+/**
+ * Computing strongly connected components of a directed graph.
+ * There are more than 800,000 vertices and 5,000,000 edges in the graph.
+ * Memery management need to be very careful.
+ * Adajcency list is used to represent the graph.
+ * Kosaraju’s Two-Pass algorithm is used to find SCCs.
+ * Use --stack-size to increase maximum stack size when running the programme,
+ * to avoid stack overflow issue caused by the recursive DFS algorithm
+ * @todo do the first pass on original graph instead of constructing the reverse graph. 
+ * 
+ * @author Vincent Fu
+ */ 
 
 'use strict';
 
@@ -17,7 +21,7 @@ const graph = [];
 const reverseGraph = [];
 
 const rl = createInterface({
-	input: createReadStream('test.txt')
+	input: createReadStream('graph.txt')
 });
 
 rl.on('line', (line) => {
@@ -62,18 +66,19 @@ class SccCaculator {
 				this._dfs(i, graph);
 			}
 		}
-		console.log(graph, this.stack)
+		console.log(graph, this.stack);
 	}
 
 	_dfs(index, graph) {
-		console.log(graph, index)
-		const heads = graph[index].heads;
+		graph[index].visited = true;
 		this.stack.push(index);
 
-		for(let j = 0; j < heads.length; j++) {
-			if(!graph[heads[j]].visited && heads[j] !== index) {
-				this.stack.push(j);
-				this._dfs(j, graph);
+		const heads = graph[index].heads;
+		const headsLen = heads.length;
+		for(let j = 0; j < headsLen; j++) {
+			const head = heads[j];
+			if(graph[head] && !graph[head].visited && head !== index) {
+				this._dfs(head, graph);
 			}
 		}
 	}

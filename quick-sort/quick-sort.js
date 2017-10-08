@@ -1,5 +1,8 @@
-/* Counting comparisons in quick sort */
-/* Use the "median-of-three" pivot rule */
+/** Counting comparisons in quick sort
+ * 	Use the "median-of-three" pivot rule
+ * 	
+ * 	@author Vincent Fu
+ */
 
 'use strict';
 

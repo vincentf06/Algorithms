@@ -1,4 +1,8 @@
-/* Node.js implementation of divide and conquer algorithm for inversions */
+/**
+ * Node.js implementation of divide and conquer algorithm for inversions
+ * 
+ * @author Vincent Fu
+ */
 
 'use strict';
 
