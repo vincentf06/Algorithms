@@ -14,13 +14,9 @@ const clone = require('clone');
 
 const graph = [];
 const reversedGraph = [];
-const thisList = {
-	tail: null,
-	heads: [],
-};
 
 const rl = createInterface({
-	input: createReadStream('test.txt')
+	input: createReadStream('graph.txt')
 });
 
 rl.on('line', (line) => {
@@ -28,24 +24,20 @@ rl.on('line', (line) => {
 	const [tail, head] = list;
 
 	// Build graph
-	if(tail !== thisList.tail) {
-		if(thisList.tail) graph.push(clone(thisList));
-
-		thisList.tail = tail;
-		thisList.heads = [head];
+	if(!graph[tail]) {
+		graph[tail] = {heads: [head]};
 	} else {
-		thisList.heads.push(head);
+		graph[tail].heads.push(head);
 	}
 
 	// Build reversed graph
-	const reversedList = reversedGraph.find(list => list.tail === head);
-	if(!reversedList) {
-		reversedGraph.push({tail: head, heads: [tail]});
+	if(!reversedGraph[head]) {
+		reversedGraph[head] = {heads: [tail]};
 	} else {
-		reversedList.heads.push(tail);
+		reversedGraph[head].heads.push(tail);
 	}
 });
 
 rl.on('close', () => {
-	console.log(reversedGraph)
+	console.log(graph)
 });
