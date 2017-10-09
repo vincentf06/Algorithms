@@ -15,7 +15,6 @@
 
 const { createReadStream } = require('fs');
 const { createInterface } = require('readline');
-const clone = require('clone');
 
 const graph = [];
 const reverseGraph = [];
