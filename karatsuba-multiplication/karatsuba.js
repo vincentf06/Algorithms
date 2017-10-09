@@ -1,5 +1,5 @@
 /**
- * Node.js implementation of Karatsuba multiplication
+ * Karatsuba multiplication algorithm
  * Using big-Integer for addition and subtraction only
  * 
  * @author Vincent Fu
