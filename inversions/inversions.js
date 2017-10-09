@@ -1,5 +1,5 @@
 /**
- * Node.js implementation of divide and conquer algorithm for inversions
+ * Divide and conquer algorithm (Merge Sort) for counting inversions
  * 
  * @author Vincent Fu
  */
