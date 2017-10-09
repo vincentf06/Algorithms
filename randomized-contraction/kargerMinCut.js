@@ -1,8 +1,8 @@
 /**
- * Karger's min cut algorithm
- * Store edges separately to make sure edge pick is uniformly at random
+ *  Karger's min cut algorithm
+ *  Store edges separately to make sure edge pick is uniformly at random
  * 
- * @author Vincent Fu
+ *  @author Vincent Fu
  */ 
 
 
