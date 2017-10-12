@@ -44,6 +44,7 @@ rl.on('line', (line) => {
 
 rl.on('close', () => {
   const sccCaculator = new SccCaculator(graph, reverseGraph);
+  sccCaculator.traverse(true);
   sccCaculator.traverse(false);
 });
 
@@ -51,34 +52,35 @@ class SccCaculator {
   constructor(graph, reverseGraph) {
     this.graph = graph;
     this.reverseGraph = reverseGraph;
-    this.finishingTime = 0;
+    this.magicOrder = [];
     this.leaders = [];
-    this.stack = [];
   }
 
-  traverse(forward) {
-    const graph = forward ? this.graph : this.reverseGraph;
+  traverse(reverse) {
+    const graph = reverse ? this.reverseGraph : this.graph;
     
-    for(let i = 0; i < graph.length; i++) {
+    for(let i = 0 ; i < graph.length; i++) {
       if(graph[i] && !graph[i].visited) {
         this.leaders.push(i);
-        this._dfs(i, graph);
+        this._dfs(i, graph, reverse);
       }
     }
-    console.log(graph, this.stack);
+    // console.log(graph, this.magicOrder);
   }
 
-  _dfs(index, graph) {
+  _dfs(index, graph, reverse) {
     graph[index].visited = true;
-    this.stack.push(index);
 
     const heads = graph[index].heads;
     const headsLen = heads.length;
     for(let j = 0; j < headsLen; j++) {
       const head = heads[j];
       if(graph[head] && !graph[head].visited && head !== index) {
-        this._dfs(head, graph);
+        this._dfs(head, graph, reverse);
       }
     }
+    
+    // Caculate magic order for the second pass
+    if(reverse) this.magicOrder.push(index);
   }
 }
