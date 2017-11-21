@@ -1,6 +1,6 @@
 /** 	
- * 	Counting comparisons in quick sort
- * 	Use the "median-of-three" pivot rule
+ * 	Quick Sort
+ * 	Use median-of-three pivot rule
  *
  * 	@author Vincent Fu
  */
