@@ -1,8 +1,5 @@
 ## Algorithms
 
-### Stanford Algorithms Javascript Implementation. 
-### Author: Vincent Fu
-
 1. Karatsuba multiplication algorithm
 2. Counting inversions
 3. Closest pair of points
